@@ -1,0 +1,90 @@
+[
+  {
+    "id": "model-001",
+    "pillar": "onboarding",
+    "name": "Ascend KYC-AML Engine",
+    "version": "v2.3.1",
+    "status": "production",
+    "deployedAt": "2026-05-20T10:00:00.000Z",
+    "trainedOn": "Jan 2024 – Apr 2026 (2.1M investor onboarding events)",
+    "accuracy": 96.8,
+    "avgConfidence": 0.91,
+    "totalDecisions": 14820,
+    "autoResolvedRate": 78.4,
+    "overrideRate": 3.2,
+    "biasReport": {
+      "status": "passed",
+      "genderBias": "< 0.1%",
+      "geographicBias": "< 0.3%",
+      "lastChecked": "2026-05-19"
+    },
+    "description": "Handles KYC verification, AML screening, and investor risk profiling for new account onboarding.",
+    "capabilities": ["PAN/Aadhaar verification", "AML FinScan screening", "CKYC lookup", "Risk profile generation", "Structuring detection"]
+  },
+  {
+    "id": "model-002",
+    "pillar": "servicing",
+    "name": "Ascend ServBot NLP Engine",
+    "version": "v1.8.0",
+    "status": "production",
+    "deployedAt": "2026-04-15T10:00:00.000Z",
+    "trainedOn": "Jan 2023 – Mar 2026 (8.4M investor servicing interactions)",
+    "accuracy": 94.1,
+    "avgConfidence": 0.89,
+    "totalDecisions": 38240,
+    "autoResolvedRate": 82.1,
+    "overrideRate": 2.8,
+    "biasReport": {
+      "status": "passed",
+      "genderBias": "< 0.2%",
+      "geographicBias": "< 0.4%",
+      "lastChecked": "2026-04-14"
+    },
+    "description": "Processes investor service requests including account statements, SIP changes, redemptions, and NAV queries using NLP.",
+    "capabilities": ["Intent classification", "Entity extraction", "SIP lifecycle management", "Redemption processing", "Statement generation"]
+  },
+  {
+    "id": "model-003",
+    "pillar": "regulatory",
+    "name": "Ascend RegBot Drafting Engine",
+    "version": "v3.1.0",
+    "status": "production",
+    "deployedAt": "2026-05-01T10:00:00.000Z",
+    "trainedOn": "SEBI/AMFI circulars 2019–2026, 3,200 historical reports",
+    "accuracy": 97.4,
+    "avgConfidence": 0.93,
+    "totalDecisions": 4120,
+    "autoResolvedRate": 65.3,
+    "overrideRate": 4.1,
+    "biasReport": {
+      "status": "passed",
+      "genderBias": "N/A",
+      "geographicBias": "N/A",
+      "lastChecked": "2026-04-30"
+    },
+    "description": "Auto-drafts SEBI and AMFI regulatory reports, performs reconciliation, and validates against current circular format requirements.",
+    "capabilities": ["SEBI report drafting", "AMFI data compilation", "Reconciliation checks", "Circular compliance validation", "Complaint response drafting"]
+  },
+  {
+    "id": "model-004",
+    "pillar": "memory",
+    "name": "Ascend CompoundMem Layer",
+    "version": "v0.9.2",
+    "status": "beta",
+    "deployedAt": "2026-06-01T10:00:00.000Z",
+    "trainedOn": "Continuous learning from all production interactions (rolling 90-day window)",
+    "accuracy": 91.3,
+    "avgConfidence": 0.84,
+    "totalDecisions": 2840,
+    "autoResolvedRate": 58.2,
+    "overrideRate": 6.8,
+    "biasReport": {
+      "status": "in_review",
+      "genderBias": "< 0.5% (monitoring)",
+      "geographicBias": "< 0.6% (monitoring)",
+      "lastChecked": "2026-06-10"
+    },
+    "description": "Continuously learns from every investor interaction to build institutional knowledge patterns that reduce cost and improve quality over time.",
+    "capabilities": ["Pattern extraction", "Knowledge indexing", "Confidence calibration", "Cross-pillar learning", "Anomaly detection"]
+  }
+]

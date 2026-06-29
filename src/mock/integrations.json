@@ -1,0 +1,63 @@
+[
+  {
+    "id": "int-001",
+    "name": "SS&C Advent Geneva",
+    "category": "Portfolio Accounting",
+    "status": "healthy",
+    "lastSync": "2026-06-15T11:00:00.000Z",
+    "latencyMs": 142,
+    "uptime": 99.98,
+    "description": "Core portfolio accounting and NAV calculation system",
+    "endpoint": "https://geneva.internal.ascend.in/api/v2",
+    "icon": "Database"
+  },
+  {
+    "id": "int-002",
+    "name": "KRA (CDSL / NSDL)",
+    "category": "KYC Registry",
+    "status": "healthy",
+    "lastSync": "2026-06-15T10:45:00.000Z",
+    "latencyMs": 234,
+    "uptime": 99.91,
+    "description": "KYC Registration Agency for investor identity verification",
+    "endpoint": "https://kra-gateway.cdslindia.com/api",
+    "icon": "UserCheck"
+  },
+  {
+    "id": "int-003",
+    "name": "SEBI SCORES Portal",
+    "category": "Regulatory",
+    "status": "healthy",
+    "lastSync": "2026-06-15T09:00:00.000Z",
+    "latencyMs": 891,
+    "uptime": 98.7,
+    "description": "SEBI complaint registration and resolution portal",
+    "endpoint": "https://scores.sebi.gov.in/api",
+    "icon": "Scale"
+  },
+  {
+    "id": "int-004",
+    "name": "Investor Portal",
+    "category": "Customer Interface",
+    "status": "degraded",
+    "lastSync": "2026-06-15T08:30:00.000Z",
+    "latencyMs": 4210,
+    "uptime": 94.2,
+    "description": "Investor-facing web and mobile portal for self-service",
+    "endpoint": "https://invest.ascendcapital.in/api",
+    "icon": "Globe",
+    "alert": "High latency detected (4.2s avg). Investigating CDN issue. ETA: 30 min."
+  },
+  {
+    "id": "int-005",
+    "name": "AMFI Data Portal",
+    "category": "Regulatory",
+    "status": "healthy",
+    "lastSync": "2026-06-15T07:00:00.000Z",
+    "latencyMs": 312,
+    "uptime": 99.5,
+    "description": "AMFI portal for NAV submissions and industry data reporting",
+    "endpoint": "https://portal.amfiindia.com/api",
+    "icon": "BarChart2"
+  }
+]

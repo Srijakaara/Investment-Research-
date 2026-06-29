@@ -1,0 +1,122 @@
+[
+  {
+    "id": "kpi-01",
+    "label": "Investor Onboarding Time",
+    "pillar": "onboarding",
+    "unit": "hours",
+    "baseline": 72,
+    "current": 8.4,
+    "target": 6,
+    "trend": "down",
+    "status": "near_target",
+    "description": "Average hours from KYC submission to account activation",
+    "weeklyData": [
+      { "week": "W1", "value": 68.2 },
+      { "week": "W2", "value": 54.1 },
+      { "week": "W3", "value": 41.3 },
+      { "week": "W4", "value": 32.8 },
+      { "week": "W5", "value": 24.5 },
+      { "week": "W6", "value": 18.2 },
+      { "week": "W7", "value": 13.4 },
+      { "week": "W8", "value": 10.1 },
+      { "week": "W9", "value": 8.9 },
+      { "week": "W10", "value": 8.4 }
+    ]
+  },
+  {
+    "id": "kpi-02",
+    "label": "Query Resolution Time",
+    "pillar": "servicing",
+    "unit": "hours",
+    "baseline": 54,
+    "current": 4.2,
+    "target": 4,
+    "trend": "down",
+    "status": "near_target",
+    "description": "Average hours from investor query to final resolution",
+    "weeklyData": [
+      { "week": "W1", "value": 51.3 },
+      { "week": "W2", "value": 42.8 },
+      { "week": "W3", "value": 33.2 },
+      { "week": "W4", "value": 24.1 },
+      { "week": "W5", "value": 16.8 },
+      { "week": "W6", "value": 11.2 },
+      { "week": "W7", "value": 8.4 },
+      { "week": "W8", "value": 6.1 },
+      { "week": "W9", "value": 5.0 },
+      { "week": "W10", "value": 4.2 }
+    ]
+  },
+  {
+    "id": "kpi-03",
+    "label": "Ops Cost Per Investor",
+    "pillar": "servicing",
+    "unit": "percent_reduction",
+    "baseline": 100,
+    "current": 79,
+    "target": 75,
+    "trend": "down",
+    "status": "on_track",
+    "description": "Operating cost per investor indexed to baseline (lower is better)",
+    "weeklyData": [
+      { "week": "W1", "value": 98 },
+      { "week": "W2", "value": 95 },
+      { "week": "W3", "value": 91 },
+      { "week": "W4", "value": 88 },
+      { "week": "W5", "value": 86 },
+      { "week": "W6", "value": 84 },
+      { "week": "W7", "value": 82 },
+      { "week": "W8", "value": 81 },
+      { "week": "W9", "value": 80 },
+      { "week": "W10", "value": 79 }
+    ]
+  },
+  {
+    "id": "kpi-04",
+    "label": "Regulatory Report Cycle",
+    "pillar": "regulatory",
+    "unit": "percent_reduction",
+    "baseline": 100,
+    "current": 64,
+    "target": 60,
+    "trend": "down",
+    "status": "on_track",
+    "description": "Regulatory reporting turnaround indexed to baseline (lower is better)",
+    "weeklyData": [
+      { "week": "W1", "value": 96 },
+      { "week": "W2", "value": 90 },
+      { "week": "W3", "value": 84 },
+      { "week": "W4", "value": 80 },
+      { "week": "W5", "value": 76 },
+      { "week": "W6", "value": 73 },
+      { "week": "W7", "value": 70 },
+      { "week": "W8", "value": 68 },
+      { "week": "W9", "value": 65 },
+      { "week": "W10", "value": 64 }
+    ]
+  },
+  {
+    "id": "kpi-05",
+    "label": "Investor Complaint Ratio",
+    "pillar": "servicing",
+    "unit": "percent_reduction",
+    "baseline": 100,
+    "current": 72,
+    "target": 60,
+    "trend": "down",
+    "status": "at_risk",
+    "description": "Complaints per 10,000 investors indexed to baseline (lower is better)",
+    "weeklyData": [
+      { "week": "W1", "value": 98 },
+      { "week": "W2", "value": 94 },
+      { "week": "W3", "value": 90 },
+      { "week": "W4", "value": 87 },
+      { "week": "W5", "value": 85 },
+      { "week": "W6", "value": 83 },
+      { "week": "W7", "value": 80 },
+      { "week": "W8", "value": 78 },
+      { "week": "W9", "value": 75 },
+      { "week": "W10", "value": 72 }
+    ]
+  }
+]
