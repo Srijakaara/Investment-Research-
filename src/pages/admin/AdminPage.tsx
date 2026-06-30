@@ -31,7 +31,7 @@ const ADMIN_SECTIONS = [
     path: '/admin/models',
     summary: '3 production · 1 beta',
   },
-] as const
+]
 
 export function AdminPage() {
   const navigate = useNavigate()
