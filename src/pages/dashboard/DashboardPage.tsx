@@ -11,9 +11,10 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts'
-import { CheckCircle2, Clock, AlertTriangle, TrendingUp, ArrowUpRight, XCircle } from 'lucide-react'
+import { CheckCircle2, Clock, AlertTriangle, TrendingUp, ArrowUpRight, XCircle, Timer, Bot, UserCheck } from 'lucide-react'
 import { useDecisionsStore } from '@/store/decisionsStore'
 import { useKPIStore } from '@/store/kpiStore'
+import { useAuditStore } from '@/store/auditStore'
 import { Header } from '@/components/common/Header'
 import { StatCard } from '@/components/common/StatCard'
 import { KPICard } from '@/components/common/KPICard'
@@ -27,6 +28,23 @@ import { TONE_HEX, ORDERED_PALETTE } from '@/lib/colorMap'
 import { useNavigate } from 'react-router-dom'
 import type { KPI } from '@/types/kpi'
 import type { Pillar } from '@/types/decision'
+
+// Hours saved when AI fully auto-resolves a case (turnaround time reduction per pillar)
+const AUTO_HOURS_SAVED: Record<string, number> = {
+  onboarding: 63.6,  // 72h baseline → 8.4h current
+  servicing:  49.8,  // 54h baseline → 4.2h current
+  regulatory: 2.5,   // ops time to compile, validate and submit manually
+  memory:     1.5,   // pattern review and deployment session
+}
+
+// Hours saved when AI prepares the proposal and a human reviews it
+// (research + data gathering + system checks AI does instead of the operator)
+const ASSISTED_HOURS_SAVED: Record<string, number> = {
+  onboarding: 2.5,  // PAN db, AML, CKYC, Aadhaar, risk profile — 5 systems checked by AI
+  servicing:  1.5,  // account history, mandate validation, compliance check
+  regulatory: 1.0,  // report compilation, format validation, reconciliation
+  memory:     0.5,  // statistical validation, bias check, shadow test review
+}
 
 interface CustomTooltipProps {
   active?: boolean
@@ -60,11 +78,13 @@ function CustomTooltip({ active, payload, label, valueFormatter }: CustomTooltip
 export function DashboardPage() {
   const { decisions, loading: dLoading, load: loadDecisions, setFilters } = useDecisionsStore()
   const { kpis, loading: kLoading, load: loadKPIs } = useKPIStore()
+  const { entries, load: loadAudit } = useAuditStore()
   const navigate = useNavigate()
 
   useEffect(() => {
     loadDecisions()
     loadKPIs()
+    loadAudit()
   }, [])
 
   const stats = useMemo(() => {
@@ -142,6 +162,26 @@ export function DashboardPage() {
     [criticalCount, highCount, mediumCount, lowCount, maxRiskCount],
   )
 
+  const hoursSaved = useMemo(() => {
+    const autoEntries = entries.filter((e) => e.action === 'auto_approved')
+    const assistedEntries = entries.filter((e) => e.action !== 'auto_approved')
+
+    const autoHours = autoEntries.reduce(
+      (sum, e) => sum + (AUTO_HOURS_SAVED[e.pillar] ?? 1),
+      0
+    )
+    const assistedHours = assistedEntries.reduce(
+      (sum, e) => sum + (ASSISTED_HOURS_SAVED[e.pillar] ?? 0.5),
+      0
+    )
+
+    return {
+      auto: { count: autoEntries.length, hours: autoHours },
+      assisted: { count: assistedEntries.length, hours: assistedHours },
+      total: autoHours + assistedHours,
+    }
+  }, [entries])
+
   function refresh() {
     window.location.reload()
   }
@@ -202,6 +242,86 @@ export function DashboardPage() {
             ),
           )}
         </div>
+
+        {/* ── Hours Saved by AI ──────────────────────────────────────── */}
+        <Card className="p-6">
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Timer className="h-4 w-4 text-[#6366f1]" />
+              <h3 className="text-[15px] font-semibold tracking-tight text-slate-900">
+                Operator Hours Saved by AI
+              </h3>
+            </div>
+            <ChipRoot variant="soft" color="success" size="sm" className="gap-1">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
+              <ChipLabel className="text-[11px]">Accumulating daily</ChipLabel>
+            </ChipRoot>
+          </div>
+
+          {entries.length === 0 ? (
+            <div className="space-y-3">
+              <Skeleton className="h-10 w-40" />
+              <Skeleton className="h-20 w-full" />
+            </div>
+          ) : (
+            <>
+              <div className="mb-5 flex flex-wrap items-end gap-3">
+                <span className="nums text-[42px] font-bold leading-none tracking-tight text-slate-900">
+                  {hoursSaved.total.toFixed(1)}
+                  <span className="ml-1 text-[24px] font-semibold text-slate-400">h</span>
+                </span>
+                <div className="mb-1 space-y-0.5">
+                  <p className="text-[13px] text-slate-500">saved this period</p>
+                  <p className="nums text-[12px] font-medium text-[#6366f1]">
+                    ≈ {Math.round(hoursSaved.total / 8)} working days freed from manual ops
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {/* Auto-resolved */}
+                <div className="rounded-lg border border-[#e0e7ff] bg-[#eef2ff] p-4">
+                  <div className="mb-2 flex items-center gap-2">
+                    <Bot className="h-3.5 w-3.5 text-[#6366f1]" />
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-[#4f46e5]">
+                      AI Auto-Resolved
+                    </p>
+                  </div>
+                  <p className="nums text-[28px] font-bold leading-none text-slate-900">
+                    {hoursSaved.auto.hours.toFixed(1)}
+                    <span className="ml-1 text-[16px] font-semibold text-slate-400">h</span>
+                  </p>
+                  <p className="mt-1.5 text-[12px] text-slate-500">
+                    {hoursSaved.auto.count} cases — zero ops involvement
+                  </p>
+                  <p className="mt-0.5 text-[11.5px] text-[#6366f1]">
+                    AI handled end-to-end, no human touch needed
+                  </p>
+                </div>
+
+                {/* AI-assisted review */}
+                <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
+                  <div className="mb-2 flex items-center gap-2">
+                    <UserCheck className="h-3.5 w-3.5 text-emerald-600" />
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-700">
+                      AI-Assisted Review
+                    </p>
+                  </div>
+                  <p className="nums text-[28px] font-bold leading-none text-slate-900">
+                    {hoursSaved.assisted.hours.toFixed(1)}
+                    <span className="ml-1 text-[16px] font-semibold text-slate-400">h</span>
+                  </p>
+                  <p className="mt-1.5 text-[12px] text-slate-500">
+                    {hoursSaved.assisted.count} cases — AI prepped, ops signed off
+                  </p>
+                  <p className="mt-0.5 text-[11.5px] text-emerald-600">
+                    Research &amp; checks done by AI, human gave final call
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
+        </Card>
 
         {/* ── KPI cards ──────────────────────────────────────────────── */}
         <div>
